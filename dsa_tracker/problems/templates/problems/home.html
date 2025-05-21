@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DSA Tracker</title>
+</head>
+<body>
+    <h1>My DSA Problem List</h1>
+    <ul>
+    {% for problem in problems %}
+        <li>{{ problem.title }} - {{ problem.difficulty }} - {{ problem.status }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
