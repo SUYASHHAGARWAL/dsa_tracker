@@ -5,10 +5,37 @@
 </head>
 <body>
     <h1>My DSA Problem List</h1>
+
+    <h2>Filter Problems</h2>
+    <form method="get">
+        <label for="difficulty">Difficulty:</label>
+        <select name="difficulty">
+            <option value="">All</option>
+            <option value="Easy" {% if request.GET.difficulty == "Easy" %}selected{% endif %}>Easy</option>
+            <option value="Medium" {% if request.GET.difficulty == "Medium" %}selected{% endif %}>Medium</option>
+            <option value="Hard" {% if request.GET.difficulty == "Hard" %}selected{% endif %}>Hard</option>
+        </select>
+
+        <label for="platform">Platform:</label>
+        <select name="platform">
+            <option value="">All</option>
+            <option value="LeetCode" {% if request.GET.platform == "LeetCode" %}selected{% endif %}>LeetCode</option>
+            <option value="GFG" {% if request.GET.platform == "GFG" %}selected{% endif %}>GeeksforGeeks</option>
+            <option value="Codeforces" {% if request.GET.platform == "Codeforces" %}selected{% endif %}>Codeforces</option>
+        </select>
+
+        <button type="submit">Apply Filters</button>
+        <a href="{% url 'home' %}">Reset Filters</a>
+    </form>
+
     <ul>
     {% for problem in problems %}
-        <li>{{ problem.title }} - {{ problem.difficulty }} - {{ problem.status }}</li>
+        <li>{{ problem.title }} - {{ problem.difficulty }} - {{ problem.platform }} - {{ problem.status }}</li>
+    {% empty %}
+        <li>No problems found.</li>
     {% endfor %}
     </ul>
+
+    <a href="{% url 'add_problem' %}">Add New Problem</a>
 </body>
 </html>

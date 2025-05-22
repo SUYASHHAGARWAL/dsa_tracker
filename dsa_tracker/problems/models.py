@@ -7,15 +7,17 @@ class Problem(models.Model):
         ('Hard', 'Hard'),
     ]
 
-    STATUS_CHOICES = [
-        ('Unsolved', 'Unsolved'),
-        ('Solved', 'Solved'),
+    PLATFORM_CHOICES = [
+        ('LeetCode', 'LeetCode'),
+        ('GFG', 'GeeksforGeeks'),
+        ('Codeforces', 'Codeforces'),
     ]
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=255)
     link = models.URLField()
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Unsolved')
+    platform = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='LeetCode')
+    status = models.CharField(max_length=20, default='Unsolved')
 
     def __str__(self):
         return self.title
