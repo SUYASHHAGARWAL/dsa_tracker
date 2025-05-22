@@ -2,6 +2,57 @@
 <html>
 <head>
     <title>DSA Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        select, button, a {
+            margin: 5px 10px 5px 0;
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 <body>
     <h1>My DSA Problem List</h1>
@@ -30,12 +81,15 @@
 
     <ul>
     {% for problem in problems %}
-        <li>{{ problem.title }} - {{ problem.difficulty }} - {{ problem.platform }} - {{ problem.status }}</li>
+        <li>
+            <strong>{{ problem.title }}</strong> <br>
+            Difficulty: {{ problem.difficulty }} | Platform: {{ problem.platform }} | Status: {{ problem.status }}
+        </li>
     {% empty %}
         <li>No problems found.</li>
     {% endfor %}
     </ul>
 
-    <a href="{% url 'add_problem' %}">Add New Problem</a>
+    <a href="{% url 'add_problem' %}">➕ Add New Problem</a>
 </body>
 </html>
