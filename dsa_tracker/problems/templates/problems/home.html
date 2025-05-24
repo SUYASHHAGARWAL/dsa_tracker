@@ -118,6 +118,11 @@
         .actions {
             margin-top: 20px;
         }
+
+        .problem-actions {
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -160,6 +165,7 @@
         {% for problem in problems %}
             <li>
                 <strong>{{ problem.title }}</strong>
+
                 <span class="badge 
                     {% if problem.difficulty == 'Easy' %}easy
                     {% elif problem.difficulty == 'Medium' %}medium
@@ -175,8 +181,15 @@
                     {% endif %}">
                     {{ problem.status }}
                 </span>
+
                 <br>
                 Platform: {{ problem.platform }}
+
+                <div class="problem-actions">
+                    <a href="{% url 'toggle_status' problem.id %}">
+                        {% if problem.status == 'Unsolved' %}✅ Mark as Solved{% else %}❌ Mark as Unsolved{% endif %}
+                    </a>
+                </div>
             </li>
         {% empty %}
             <li>No problems found.</li>

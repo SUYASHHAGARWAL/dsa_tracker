@@ -28,3 +28,13 @@ def add_problem(request):
     else:
         form = ProblemForm()
     return render(request, 'problems/add_problems.html', {'form': form})
+
+
+def toggle_status(request, problem_id):
+    problem = Problem.objects.get(id=problem_id)
+    if problem.status == 'Unsolved':
+        problem.status = 'Solved'
+    else:
+        problem.status = 'Unsolved'
+    problem.save()
+    return redirect('home')
