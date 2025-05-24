@@ -27,7 +27,7 @@
 
         main {
             padding: 40px;
-            max-width: 800px;
+            max-width: 850px;
             margin: auto;
         }
 
@@ -38,10 +38,13 @@
 
         form {
             margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
 
         select, button, a {
-            margin: 5px 10px 5px 0;
             padding: 8px 14px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -101,6 +104,17 @@
         .medium { background-color: #ffc107; color: #333; }
         .hard { background-color: #dc3545; }
 
+        .status-badge {
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .solved { background-color: #28a745; color: white; }
+        .unsolved { background-color: #dc3545; color: white; }
+        .inprogress { background-color: #ffc107; color: #333; }
+
         .actions {
             margin-top: 20px;
         }
@@ -130,7 +144,15 @@
                 <option value="Codeforces" {% if request.GET.platform == "Codeforces" %}selected{% endif %}>Codeforces</option>
             </select>
 
-            <button type="submit">Apply Filters</button>
+            <label for="sort">Sort by:</label>
+            <select name="sort">
+                <option value="">Default</option>
+                <option value="difficulty" {% if request.GET.sort == "difficulty" %}selected{% endif %}>Difficulty</option>
+                <option value="platform" {% if request.GET.sort == "platform" %}selected{% endif %}>Platform</option>
+                <option value="status" {% if request.GET.sort == "status" %}selected{% endif %}>Status</option>
+            </select>
+
+            <button type="submit">Apply</button>
             <a href="{% url 'home' %}">Reset</a>
         </form>
 
@@ -145,8 +167,16 @@
                     {% endif %}">
                     {{ problem.difficulty }}
                 </span>
+
+                <span class="status-badge
+                    {% if problem.status == 'Solved' %}solved
+                    {% elif problem.status == 'Unsolved' %}unsolved
+                    {% elif problem.status == 'In Progress' %}inprogress
+                    {% endif %}">
+                    {{ problem.status }}
+                </span>
                 <br>
-                Platform: {{ problem.platform }} | Status: {{ problem.status }}
+                Platform: {{ problem.platform }}
             </li>
         {% empty %}
             <li>No problems found.</li>
