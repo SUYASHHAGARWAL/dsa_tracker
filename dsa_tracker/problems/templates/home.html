@@ -127,8 +127,19 @@
 </head>
 <body>
     <header>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1>📚 DSA Problem Tracker</h1>
-    </header>
+        <div>
+            {% if user.is_authenticated %}
+                <span style="margin-right: 10px;">👋 Welcome, <strong>{{ user.username }}</strong></span>
+                <a href="{% url 'logout' %}" style="color: white; text-decoration: underline;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="color: white; text-decoration: underline; margin-right: 15px;">Login</a>
+                <a href="{% url 'signup' %}" style="color: white; text-decoration: underline;">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
 
     <main>
         <h2>Filter Problems</h2>
