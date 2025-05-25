@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Problem
-from .forms import ProblemForm
+from .forms import ProblemForm, ExcelUploadForm
+import pandas as pd
 
 
 @login_required
@@ -36,17 +37,29 @@ def home(request):
 
 @login_required
 def add_problem(request):
-    if request.method == 'POST':
-        form = ProblemForm(request.POST)
-        if form.is_valid():
-            problem = form.save(commit=False)
-            problem.user = request.user
-            problem.save()
+    if request.method == 'POST' and 'file' in request.FILES:
+        excel_form = ExcelUploadForm(request.POST, request.FILES)
+        if excel_form.is_valid():
+            excel_file = request.FILES['file']
+            
+            # read the excel using pandas
+            df = pd.read_excel(excel_file)
+
+            for _, row in df.iterrows():
+                Problem.objects.create(
+                    title=row['title'],
+                    link=row['link'],
+                    platform=row['platform'],
+                    difficulty=row['difficulty'],
+                    # if you added 'user' field
+                    user=request.user
+                )
             return redirect('home')
     else:
-        form = ProblemForm()
-    return render(request, 'problems/add_problems.html', {'form': form})
-
+        excel_form = ExcelUploadForm()
+    
+    form = ProblemForm()
+    return render(request, 'problems/add_problems.html', {'form': form, 'excel_form': excel_form})
 
 
 

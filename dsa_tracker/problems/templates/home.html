@@ -194,7 +194,8 @@
                 </span>
 
                 <br>
-                Platform: {{ problem.platform }}
+                Platform: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.platform }}</a>
+
 
                 <div class="problem-actions">
                     <a href="{% url 'toggle_status' problem.id %}">
